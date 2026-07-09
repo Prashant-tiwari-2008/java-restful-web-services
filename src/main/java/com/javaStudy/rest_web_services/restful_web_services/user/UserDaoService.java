@@ -18,8 +18,8 @@ public class UserDaoService {
     // Read about static bloac
     static {
         users.add(new User("Prashant", 1, LocalDate.now().minusYears(30)));
-        users.add(new User("Pradeep", 1, LocalDate.now().minusYears(40)));
-        users.add(new User("Sweta", 1, LocalDate.now().minusYears(35)));
+        users.add(new User("Pradeep", 2, LocalDate.now().minusYears(40)));
+        users.add(new User("Sweta", 3, LocalDate.now().minusYears(35)));
     }
 
 
@@ -37,5 +37,10 @@ public class UserDaoService {
         Predicate<? super User> predicate = user -> user.getID().equals(id);
 //        return users.stream().filter(predicate).findFirst().orElse(null);
         return users.stream().filter(predicate).findFirst().orElse(null);
+    }
+
+    public boolean deleteUser(int id) {
+        Predicate<? super User> predicate = user -> user.getID().equals(id);
+        return users.removeIf(predicate);
     }
 }

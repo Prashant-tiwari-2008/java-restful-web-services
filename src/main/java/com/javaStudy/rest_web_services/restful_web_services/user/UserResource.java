@@ -40,4 +40,15 @@ public class UserResource {
 
         return ResponseEntity.created(location).build();
     }
+
+    @DeleteMapping("/user/{id}")
+    public String deleteUser(@PathVariable int id) {
+        if(userService.deleteUser(id)) {
+            return "User Deleted successfully";
+        }else{
+            return "NOt able to delete user";
+        }
+
+    }
+
 }
