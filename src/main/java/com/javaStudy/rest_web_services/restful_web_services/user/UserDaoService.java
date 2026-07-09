@@ -27,14 +27,15 @@ public class UserDaoService {
         return users;
     }
 
-    public void setUsers(User user) {
+    public User setUsers(User user) {
         users.add(user);
+        return user;
     }
 
     // todo : need to read more about it
     public User getUser(int id) {
         Predicate<? super User> predicate = user -> user.getID().equals(id);
 //        return users.stream().filter(predicate).findFirst().orElse(null);
-        return users.stream().filter(predicate).findFirst().get();
+        return users.stream().filter(predicate).findFirst().orElse(null);
     }
 }
