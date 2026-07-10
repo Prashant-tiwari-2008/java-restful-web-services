@@ -1,13 +1,19 @@
 package com.javaStudy.rest_web_services.restful_web_services.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
 public class User {
+
+    @Size(min = 2, max = 50)
     private String username;
     private final int ID;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Past
     private final LocalDate birthday;
 
     public User(String username, Integer id, LocalDate birthday) {
