@@ -8,12 +8,12 @@ import java.time.LocalDate;
 
 public class User {
 
-    @Size(min = 2, max = 50 , message = "Name should b/w 2 to 50 char long")
+    @Size(min = 2, max = 50 , message = "Name should b/w 2 to 50 char long testing auto save setting")
     private String username;
     private final int ID;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Past(message = "date should be from past only")
+    @Past(message = "date should be from past only testing")
     private final LocalDate birthday;
 
     public User(String username, Integer id, LocalDate birthday) {
