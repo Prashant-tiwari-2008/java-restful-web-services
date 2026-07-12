@@ -2,44 +2,66 @@ package com.javaStudy.rest_web_services.restful_web_services.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
+@Entity(name="user_details")
+@Table(name="user_details")
 public class User {
 
-    private final int ID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Size(min = 2, max = 50 , message = "Name should b/w 2 to 50 char long testing auto save setting")
-   @JsonProperty("user_name")
+    @JsonProperty("user_name")
     private String username;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Past(message = "date should be from past only testing")
     @JsonProperty("Birth_Date")
-    private final LocalDate birthday;
+    @Column(name = "birth_date")
+    private LocalDate birthday;
+
+    public User() {
+    }
+    public User(int ID, String username, LocalDate birthday) {}
 
     public User(String username, Integer id, LocalDate birthday) {
         super();
         this.username = username;
-        this.ID = id;
+        this.id = id;
         this.birthday = birthday;
     }
 
     public Integer getID() {
-        return ID;
+        return id;
     }
 
     public LocalDate getBirthday() {
         return birthday;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
-                ", Id='" + ID + '\'' +
+                ", Id='" + id + '\'' +
                 ", birthday=" + birthday +
                 '}';
     }
