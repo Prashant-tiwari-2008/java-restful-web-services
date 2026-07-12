@@ -1,12 +1,14 @@
 package com.javaStudy.rest_web_services.restful_web_services.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity(name="user_details")
 @Table(name="user_details")
@@ -25,6 +27,10 @@ public class User {
     @JsonProperty("Birth_Date")
     @Column(name = "birth_date")
     private LocalDate birthday;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Post> posts;
 
     public User() {
     }
