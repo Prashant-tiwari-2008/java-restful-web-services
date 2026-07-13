@@ -29,7 +29,7 @@ public class User {
     private LocalDate birthday;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
+//    @JsonIgnore
     private List<Post> posts;
 
     public User() {
@@ -78,5 +78,13 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }
