@@ -23,12 +23,10 @@ public class UserJpaResource {
         this.repository = repository;
     }
 
-
     @GetMapping("/jpa/users")
     public List<User> retrieveAllUsers() {
         return repository.findAll();
     }
-
 
     @GetMapping("/jpa/user/{id}")
     public Optional<User> getUser(@PathVariable int id) {
@@ -38,21 +36,6 @@ public class UserJpaResource {
         }
         return currentUser;
     }
-
-
-//  todo : not working
-//    @GetMapping("/user/{id}")
-//    public EntityModel<User> getUser(@PathVariable int id) {
-//        User currentUser =  userService.getUser(id);
-//        if(currentUser == null) {
-//            throw new UserNotFoundException("id : " + id);
-//        }
-//        EntityModel<User> entityModel = EntityModel.of(currentUser);
-//        WebMvcLinkBuilder link = linkTo(methodOn(this.getClass().retrieveAllUsers()));
-//        entityModel.add(link.withRel("all-users"));
-//        return entityModel;
-//    }
-
 
     @PostMapping("/jpa/user")
     public ResponseEntity<User> createUser(@Valid  @RequestBody User user) {
@@ -70,4 +53,29 @@ public class UserJpaResource {
         repository.deleteById(id);
     }
 
+    @GetMapping("/jpa/user/{id}/post")
+    public List<Post> retrievePostForUser(@PathVariable int id) {
+        Optional<User> currentUser = repository.findById(id);
+        System.out.println("currentUser: " + currentUser);
+        if(currentUser.isEmpty()) {
+            throw new UserNotFoundException("id : " + id);
+        }
+
+       return currentUser.get().getPosts();
+    }
 }
+
+
+
+//  todo : not working
+//    @GetMapping("/user/{id}")
+//    public EntityModel<User> getUser(@PathVariable int id) {
+//        User currentUser =  userService.getUser(id);
+//        if(currentUser == null) {
+//            throw new UserNotFoundException("id : " + id);
+//        }
+//        EntityModel<User> entityModel = EntityModel.of(currentUser);
+//        WebMvcLinkBuilder link = linkTo(methodOn(this.getClass().retrieveAllUsers()));
+//        entityModel.add(link.withRel("all-users"));
+//        return entityModel;
+//    }
