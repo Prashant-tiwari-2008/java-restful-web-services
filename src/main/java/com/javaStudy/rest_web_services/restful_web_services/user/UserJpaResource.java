@@ -1,5 +1,6 @@
 package com.javaStudy.rest_web_services.restful_web_services.user;
 
+import com.javaStudy.rest_web_services.restful_web_services.jpa.PostRepository;
 import com.javaStudy.rest_web_services.restful_web_services.jpa.UserRepository;
 import jakarta.persistence.Entity;
 import jakarta.validation.Valid;
@@ -17,10 +18,12 @@ import java.util.Optional;
 public class UserJpaResource {
     private UserDaoService userService;
     private UserRepository repository;
+    private PostRepository postRepository;
 
-    public UserJpaResource(UserDaoService userService, UserRepository repository) {
+    public UserJpaResource(UserDaoService userService, UserRepository repository,PostRepository postRepository) {
         this.userService = userService;
         this.repository = repository;
+        this.postRepository = postRepository;
     }
 
     @GetMapping("/jpa/users")
@@ -62,6 +65,19 @@ public class UserJpaResource {
         }
 
        return currentUser.get().getPosts();
+    }
+
+    @PostMapping("/jpa/user/{id}/post")
+    public ResponseEntity<Post> createPostForUser(@PathVariable int id, @Valid @RequestBody Post post) {
+        Optional<User> currentUser = repository.findById(id);
+        if(currentUser.isEmpty()){
+            throw new  UserNotFoundException("id : " + id);
+        }
+        post.setUser(currentUser.get());
+        Post saavedPost = postRepository.save(post);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(saavedPost.getId()).toUri();
+        return ResponseEntity.created(location).build();
     }
 }
 

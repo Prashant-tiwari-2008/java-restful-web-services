@@ -17,14 +17,6 @@ public class Post {
     @JsonIgnore
     private User user;
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public int getId() {
         return id;
     }
@@ -38,4 +30,13 @@ public class Post {
     public void setDescription(String description) {
         this.Description = description;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }
